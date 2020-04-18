@@ -1,0 +1,66 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static long sumOfDigits(long a,long b) 
+    { 
+        
+        if(a==0){
+            return 0;
+        }
+        else{
+            if(b!=1){
+                long sum=0;
+            for(sum=0;a>0;sum+=a%10, a /=10);
+            long newNum=sum;
+            String newString = Long.toString(newNum);
+            long len = newString.length();
+            return sumOfDigits(newNum,len);
+            }
+            else{
+             return (long)a;
+            }
+        }
+        
+
+    }   
+
+    // Complete the superDigit function below.
+    static long superDigit(String n, long k) {
+        long sum=0;
+         for( int index=0; index<n.length();index++ ){
+          sum+=Long.parseLong(String.valueOf(n.charAt(index))); 
+    }
+         long newNo = sum * k;
+         long len = n.length();
+          return sumOfDigits(newNo,len);
+
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] nk = scanner.nextLine().split(" ");
+
+        String n = nk[0];
+
+        long k = Long.parseLong(nk[1]);
+
+        long result = superDigit(n, k);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
