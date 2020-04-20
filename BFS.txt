@@ -1,0 +1,86 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+public class BFSearch {
+
+
+
+    static ArrayList<Integer> bfsearch(ArrayList<ArrayList<Integer>> adj, int t)
+    
+     {
+        LinkedList<Integer> y = new LinkedList<Integer>();
+        ArrayList<Integer> storelist = new ArrayList<Integer>(adj.size());
+       
+       
+        for (int i = 0; i < adj.size(); i++) 
+        {
+            storelist.add(0);
+        }
+        
+        y.addFirst(t);
+
+        while (y.size() > 0)
+        {
+            int current = y.pollLast();
+            ArrayList<Integer> tmp = adj.get(current);
+            for (int i = 0; i < tmp.size(); i++)
+             {
+                int v = tmp.get(i);
+                if (storelist.get(v) == 0) 
+                {
+                    y.addFirst(v);
+                    storelist.set(v, storelist.get(current) + 6);
+                }
+            }
+        }
+
+        return storelist;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int y = in.nextInt();
+        for(int a = 0; a < y; a++){
+
+            int n = in.nextInt();
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(n);
+            for (int i = 0; i < n; i++) {
+                adj.add(new ArrayList<Integer>());
+            }
+
+            int m = in.nextInt();
+            for(int b = 0; b < m; b++){
+                int i = in.nextInt() - 1;
+                int j = in.nextInt() - 1;
+                ArrayList<Integer> tmp = adj.get(i);
+                tmp.add(j);
+                adj.set(i, tmp);
+
+
+                tmp = adj.get(j);
+                tmp.add(i);
+                adj.set(j, tmp);
+            }
+
+            int t = in.nextInt() - 1;
+
+            ArrayList<Integer> result = BFSearch.bfsearch(adj, t);
+
+            for (int i = 0; i < n; i++) {
+                if (i != t) {
+                    if (result.get(i) == 0) {
+                        System.out.print("-1 ");
+                    } else 
+                        System.out.print(result.get(i) + " ");
+                    
+                }
+            }
+            System.out.print("\n");
+        }
+        in.close();
+    }
+}
