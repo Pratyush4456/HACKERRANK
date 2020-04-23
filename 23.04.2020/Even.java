@@ -1,4 +1,4 @@
-package com.shub;
+package com.vp;
 
 @FunctionalInterface
 public interface Even {
